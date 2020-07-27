@@ -1,0 +1,8 @@
+<div style="width:30%; margin: auto; margin-top: 170px;">
+  <div class="card p-5">
+    <h4> Escribe tu nombre y entra al chat!!!</h4>
+    <input type="text" class="form-control" [(ngModel)]="User.name" (change)="myContact()">
+
+    <a href="" class="btn btn-primary btn-block mt-3" [routerLink]="['/chat', User.name]">Unirme al chat</a>
+  </div>
+</div>

@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
 })
-export class WebsocketService {
+export class WebSocketService {
 
   socket: any;
-  readonly uri: string = "ws://localhost:3000";
+  server = "http://localhost:3000";
 
   constructor() {
-    this.socket = io(this.uri);
+    this.socket = io(this.server)
   }
 
   listen(eventName: String) {
@@ -20,11 +19,11 @@ export class WebsocketService {
       this.socket.on(eventName, (data) => {
         Subscriber.next(data);
       })
-    });
+    })
   }
 
   emit(eventName: String, data: any) {
     this.socket.emit(eventName, data);
-
   }
+
 }

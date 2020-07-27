@@ -1,0 +1,49 @@
+<div id="frame">
+  <div id="sidepanel">
+    <div id="profile">
+      <div class="wrap">
+        <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+        <p>{{userChat.user}}</p>
+      </div>
+    </div>
+    <div id="contacts">
+      <ul *ngFor='let contact of myContacts'>
+        <li class="contact">
+          <div class="wrap">
+            <span class="contact-status online"></span>
+            <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+            <div class="meta">
+              <p class="name">{{contact.name}}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="content">
+    <div class="contact-profile">
+      <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+      <p>Harvey Specter</p>
+    </div>
+    <li class="messages">
+      <ul *ngFor='let msg of myMessages'>
+        <li class="sent" *ngIf="msg.user===userChat.user">
+          <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+          <p>{{msg.text}}</p>
+        </li>
+        <li class="replies" *ngIf="msg.user!==userChat.user">
+          <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+          <p>{{msg.text}}</p>
+        </li>
+      </ul>
+    </li>
+    <div class="message-input">
+      <div class="wrap">
+        <input type="text" placeholder="Write your message..." class="form-control" (change)="myMessage()"
+          [(ngModel)]="userChat.text" />
+        <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+        <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true">Send</i></button>
+      </div>
+    </div>
+  </div>
+</div>
