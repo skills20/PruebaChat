@@ -550,6 +550,7 @@ body {
 @media screen and (max-width: 735px) {
   #frame .content .messages {
     max-height: calc(100% - 105px);
+    
   }
 }
 #frame .content .messages::-webkit-scrollbar {

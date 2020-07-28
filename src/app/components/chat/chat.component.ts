@@ -11,13 +11,15 @@ export class ChatComponent implements OnInit {
 
   userChat = {
     user: '',
-    contact: '',
     text: ''
   }
 
   myMessages;
   myContacts;
-  eventName = "send-message";
+  eventSendMsg = "send-message";
+  eventSelectContact = "select-contact";
+  eventChatTyping = "chat-typing";
+  typingChat = "";
 
   constructor(private activated: ActivatedRoute, private webService: WebSocketService) { }
 
@@ -26,6 +28,7 @@ export class ChatComponent implements OnInit {
     this.userChat.user = id;
     // para los mensajes
     this.webService.listen('text-event').subscribe((data) => {
+      this.typingChat = '';
       this.myMessages = data;
     })
     //para los contactos
@@ -37,13 +40,25 @@ export class ChatComponent implements OnInit {
           this.myContacts.splice(i, 1)
         }
       }
+    })
 
-      console.log(this.myContacts);
+    this.webService.listen('chat-typing').subscribe((data) => {
+      this.typingChat = '';
+      this.typingChat += data;
     })
   }
 
   myMessage() {
-    this.webService.emit(this.eventName, this.userChat);
+    this.webService.emit(this.eventSendMsg, this.userChat);
     this.userChat.text = '';
+    this.typingChat = '';
+  }
+
+  typing(event: any) {
+    this.webService.emit(this.eventChatTyping, this.userChat.user);
+  }
+
+  selectContact(value: String) {
+    this.webService.emit(this.eventSelectContact, this.userChat);
   }
 }

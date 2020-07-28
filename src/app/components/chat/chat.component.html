@@ -14,6 +14,8 @@
             <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
             <div class="meta">
               <p class="name">{{contact.name}}</p>
+              <p *ngIf="typingChat!==''"><em *ngIf="contact.name===typingChat">{{typingChat}} is typing a Message.</em>
+              </p>
             </div>
           </div>
         </li>
@@ -40,7 +42,7 @@
     <div class="message-input">
       <div class="wrap">
         <input type="text" placeholder="Write your message..." class="form-control" (change)="myMessage()"
-          [(ngModel)]="userChat.text" />
+          [(ngModel)]="userChat.text" (keyup)="typing($event)" />
         <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
         <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true">Send</i></button>
       </div>
