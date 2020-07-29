@@ -667,3 +667,13 @@ body {
 #frame .content .message-input .wrap button:focus {
   outline: none;
 }
+.avatar-style {
+  max-width: 40px;
+  max-height: 40px;
+  border-radius: 50px;
+}
+
+.contact-name {
+  align-self: end;
+  margin-top: 15;
+}
