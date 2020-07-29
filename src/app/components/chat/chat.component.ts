@@ -15,7 +15,7 @@ export class ChatComponent implements OnInit {
     text: ''
   }
 
-  myMessages;
+  myMessages = [];
   myOwnMessages = [];
   myContacts;
   eventSendMsg = "send-message";
@@ -31,28 +31,38 @@ export class ChatComponent implements OnInit {
     this.userChat.user = id;
     // Cuando recibo un mensaje
     this.webService.listen('text-event').subscribe((data) => {
-      this.myMessages = data;
+      this.myMessages.push(data);
       this.typingChat = '';
       this.myOwnMessages = [];
 
+      // Revisar Esto
       this.myMessages.forEach(msg => {
-        if ((msg.user === this.userChat.user && msg.contact === this.userChat.contact) || (msg.user === this.userChat.contact && msg.contact === this.userChat.user)) {
+        console.log(msg.user);
+        console.log(this.userChat.contact);
+        if ((msg.user === this.userChat.user && msg.contact === this.userChat.contact) ||
+          (msg.user === this.userChat.contact && msg.contact === this.userChat.user)) {
           this.myOwnMessages.push(msg);
         }
       });
+      console.log("de recibir mensaje: ", this.myOwnMessages)
+      /// revisar
+
     })
 
-    //Actualizar Contactos
-    this.webService.listen('update-Messages').subscribe((data) => {
-      this.myMessages = data;
+    //de seleccionar Contacto
+    this.webService.listen('update-Messages').subscribe((data: []) => {
+      this.myMessages.push(data);
       this.typingChat = '';
       this.myOwnMessages = [];
 
-      this.myMessages.forEach(msg => {
-        if ((msg.user === this.userChat.user && msg.contact === this.userChat.contact) || (msg.user === this.userChat.contact && msg.contact === this.userChat.user)) {
-          this.myOwnMessages.push(msg);
+      this.myMessages.forEach(msgs => {
+        console.log("de actualizar contactos 1", msgs)
+        if ((msgs.user === this.userChat.user && msgs.contact === this.userChat.contact) || (msgs.user === this.userChat.contact && msgs.contact === this.userChat.user)) {
+          this.myOwnMessages.push(msgs);
+          console.log("de actualizar contactos 2", msgs)
         }
       });
+
     })
 
     //Cuando un usuario nuevo ingresa

@@ -14,7 +14,7 @@
             <img class="avatar-style" src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
             <div class="meta">
               <p id="name">{{contact.name}}</p>
-              <p *ngIf="typingChat!==''"><em *ngIf="contact.name===typingChat">{{typingChat}} is typing a Message.</em>
+              <p *ngIf="typingChat!==''"><em *ngIf="contact.name===typingChat">is typing...</em>
               </p>
             </div>
           </div>
@@ -28,6 +28,9 @@
       <p>{{(userChat.contact)}}</p>
     </div>
     <li class="messages">
+      <div *ngIf="userChat.contact===''">
+        <img src="../../../assets/StartChat.png" alt="" />
+      </div>
       <ul *ngFor='let msg of myOwnMessages'>
         <li class="sent" *ngIf="msg.user===userChat.user">
           <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
@@ -35,7 +38,7 @@
         </li>
         <li class="replies" *ngIf="msg.user!==userChat.user">
           <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-          <p>{{msg.text}}</p>
+          <p *ngIf="msg.text!==''">{{msg.text}}</p>
         </li>
       </ul>
     </li>
