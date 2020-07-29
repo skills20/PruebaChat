@@ -550,7 +550,6 @@ body {
 @media screen and (max-width: 735px) {
   #frame .content .messages {
     max-height: calc(100% - 105px);
-    
   }
 }
 #frame .content .messages::-webkit-scrollbar {
@@ -667,4 +666,14 @@ body {
 }
 #frame .content .message-input .wrap button:focus {
   outline: none;
+}
+.avatar-style {
+  max-width: 40px;
+  max-height: 40px;
+  border-radius: 50px;
+}
+
+.contact-name {
+  align-self: end;
+  margin-top: 15;
 }

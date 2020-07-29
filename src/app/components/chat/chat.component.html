@@ -7,13 +7,13 @@
       </div>
     </div>
     <div id="contacts">
-      <ul *ngFor='let contact of myContacts'>
-        <li class="contact">
+      <ul *ngFor='let contact of myContacts; index as i'>
+        <li class="contact-status online" (click)="setVal(i)">
           <div class="wrap">
             <span class="contact-status online"></span>
-            <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+            <img class="avatar-style" src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
             <div class="meta">
-              <p class="name">{{contact.name}}</p>
+              <p id="name">{{contact.name}}</p>
               <p *ngIf="typingChat!==''"><em *ngIf="contact.name===typingChat">{{typingChat}} is typing a Message.</em>
               </p>
             </div>
@@ -25,10 +25,10 @@
   <div class="content">
     <div class="contact-profile">
       <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-      <p>Harvey Specter</p>
+      <p>{{(userChat.contact)}}</p>
     </div>
     <li class="messages">
-      <ul *ngFor='let msg of myMessages'>
+      <ul *ngFor='let msg of myOwnMessages'>
         <li class="sent" *ngIf="msg.user===userChat.user">
           <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
           <p>{{msg.text}}</p>
@@ -39,7 +39,7 @@
         </li>
       </ul>
     </li>
-    <div class="message-input">
+    <div class="message-input" *ngIf="userChat.contact!==''">
       <div class="wrap">
         <input type="text" placeholder="Write your message..." class="form-control" (change)="myMessage()"
           [(ngModel)]="userChat.text" (keyup)="typing($event)" />
