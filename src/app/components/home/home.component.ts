@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WebSocketService } from '../../services/web-socket.service';
 
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -15,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   myContacts;
   eventJoin = "join-contact";
+  alert: boolean = false;
 
   constructor(private activated: ActivatedRoute, private webService: WebSocketService) { }
 
@@ -25,5 +28,9 @@ export class HomeComponent implements OnInit {
 
   myContact() {
     this.webService.emit(this.eventJoin, this.User);
+  }
+
+  closeAlert() {
+    this.alert = false;
   }
 }

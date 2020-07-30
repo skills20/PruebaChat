@@ -7,11 +7,13 @@ import { WebSocketService } from '../../services/web-socket.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
+
 export class ChatComponent implements OnInit {
 
   userChat = {
     user: '',
     contact: '',
+    contactid: '',
     text: ''
   }
 
@@ -30,44 +32,37 @@ export class ChatComponent implements OnInit {
     const id = this.activated.snapshot.params.id;
     this.userChat.user = id;
     // Cuando recibo un mensaje
-    this.webService.listen('text-event').subscribe((data) => {
-      this.myMessages.push(data);
-      this.typingChat = '';
-      this.myOwnMessages = [];
-
-      // Revisar Esto
-      this.myMessages.forEach(msg => {
-        console.log(msg.user);
-        console.log(this.userChat.contact);
-        if ((msg.user === this.userChat.user && msg.contact === this.userChat.contact) ||
-          (msg.user === this.userChat.contact && msg.contact === this.userChat.user)) {
-          this.myOwnMessages.push(msg);
-        }
-      });
-      console.log("de recibir mensaje: ", this.myOwnMessages)
-      /// revisar
-
-    })
-
-    //de seleccionar Contacto
-    this.webService.listen('update-Messages').subscribe((data: []) => {
-      this.myMessages.push(data);
+    this.webService.listen('text-event').subscribe((data: []) => {
+      this.myMessages = data;
       this.typingChat = '';
       this.myOwnMessages = [];
 
       this.myMessages.forEach(msgs => {
-        console.log("de actualizar contactos 1", msgs)
-        if ((msgs.user === this.userChat.user && msgs.contact === this.userChat.contact) || (msgs.user === this.userChat.contact && msgs.contact === this.userChat.user)) {
+        if ((msgs.user === this.userChat.user && msgs.contact === this.userChat.contact) ||
+          (msgs.user === this.userChat.contact && msgs.contact === this.userChat.user)) {
           this.myOwnMessages.push(msgs);
-          console.log("de actualizar contactos 2", msgs)
         }
       });
+    })
 
+    //de seleccionar Contacto
+    this.webService.listen('update-Messages').subscribe((data: []) => {
+      this.myMessages = data;
+      this.typingChat = '';
+      this.myOwnMessages = [];
+
+      this.myMessages.forEach(msgs => {
+        if ((msgs.user === this.userChat.user && msgs.contact === this.userChat.contact) ||
+          (msgs.user === this.userChat.contact && msgs.contact === this.userChat.user)) {
+          this.myOwnMessages.push(msgs);
+        }
+      });
     })
 
     //Cuando un usuario nuevo ingresa
     this.webService.listen('join-event').subscribe((data) => {
       this.myContacts = data;
+
       for (var i = 0; i < this.myContacts.length; i++) {
         if (this.myContacts[i].name === this.userChat.user) {
           this.myContacts.splice(i, 1)
@@ -97,6 +92,7 @@ export class ChatComponent implements OnInit {
   //Cuando Selecciono un Contacto
   setVal(i) {
     this.userChat.contact = this.myContacts[i].name;
+    this.userChat.contactid = this.myContacts[i].id;
     this.webService.emit(this.updateMessages, this.userChat);
   }
 }
