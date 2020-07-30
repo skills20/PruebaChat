@@ -13,9 +13,10 @@
             <span class="contact-status online"></span>
             <img class="avatar-style" src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
             <div class="meta">
-              <p id="name">{{contact.name}}</p>
-              <p *ngIf="typingChat!==''"><em *ngIf="contact.name===typingChat">is typing...</em>
-              </p>
+              <p class="name">{{contact.name}}</p>
+              <span *ngIf="typingChat!==''">
+                <em *ngIf="contact.name===typingChat">is typing...</em>
+              </span>
             </div>
           </div>
         </li>
