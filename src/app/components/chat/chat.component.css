@@ -15,6 +15,7 @@ body {
 
 #frame {
   width: 95%;
+  margin: auto;
   min-width: 360px;
   max-width: 1000px;
   height: 92vh;
@@ -666,14 +667,4 @@ body {
 }
 #frame .content .message-input .wrap button:focus {
   outline: none;
-}
-.avatar-style {
-  max-width: 40px;
-  max-height: 40px;
-  border-radius: 50px;
-}
-
-.contact-name {
-  align-self: end;
-  margin-top: 15;
 }

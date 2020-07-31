@@ -19,6 +19,7 @@ export class ChatComponent implements OnInit {
 
   myMessages = [];
   myOwnMessages = [];
+  myLastMessages = [];
   myContacts;
   eventSendMsg = "send-message";
   eventSelectContact = "select-contact";
@@ -30,12 +31,24 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.activated.snapshot.params.id;
+    const contacts = this.activated.snapshot.params.myContacts;
     this.userChat.user = id;
+    this.myContacts = contacts;
+
     // Cuando recibo un mensaje
     this.webService.listen('text-event').subscribe((data: []) => {
       this.myMessages = data;
       this.typingChat = '';
       this.myOwnMessages = [];
+      this.myLastMessages = [];
+
+      this.myContacts.forEach((contcs, i) => {
+        this.myMessages.forEach(msgs => {
+          if (msgs.contact === contcs.name || msgs.user === contcs.name) {
+            this.myLastMessages[i] = msgs.text;
+          };
+        });
+      });
 
       this.myMessages.forEach(msgs => {
         if ((msgs.user === this.userChat.user && msgs.contact === this.userChat.contact) ||
@@ -50,6 +63,15 @@ export class ChatComponent implements OnInit {
       this.myMessages = data;
       this.typingChat = '';
       this.myOwnMessages = [];
+      this.myLastMessages = [];
+
+      this.myContacts.forEach((contcs, i) => {
+        this.myMessages.forEach(msgs => {
+          if (msgs.contact === contcs.name || msgs.user === contcs.name) {
+            this.myLastMessages[i] = msgs.text;
+          };
+        });
+      });
 
       this.myMessages.forEach(msgs => {
         if ((msgs.user === this.userChat.user && msgs.contact === this.userChat.contact) ||
@@ -90,7 +112,7 @@ export class ChatComponent implements OnInit {
   }
 
   //Cuando Selecciono un Contacto
-  setVal(i) {
+  getContactPosition(i) {
     this.userChat.contact = this.myContacts[i].name;
     this.userChat.contactid = this.myContacts[i].id;
     this.webService.emit(this.updateMessages, this.userChat);

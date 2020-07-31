@@ -8,15 +8,13 @@
     </div>
     <div id="contacts">
       <ul *ngFor='let contact of myContacts; index as i'>
-        <li class="contact-status online" (click)="setVal(i)">
+        <li class="contact" (click)="getContactPosition(i)">
           <div class="wrap">
             <span class="contact-status online"></span>
-            <img class="avatar-style" src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+            <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
             <div class="meta">
               <p class="name">{{contact.name}}</p>
-              <span *ngIf="typingChat!==''">
-                <em *ngIf="contact.name===typingChat">is typing...</em>
-              </span>
+              <em style="margin-left: 50px" *ngIf="myContacts[i]!==null">{{myLastMessages[i]}}</em>
             </div>
           </div>
         </li>
@@ -30,7 +28,7 @@
     </div>
     <li class="messages">
       <div *ngIf="userChat.contact===''">
-        <img src="../../../assets/StartChat.png" alt="" />
+        <img src="../../../assets/StartChat.png" alt="" style="width:100%; margin: auto;" />
       </div>
       <ul *ngFor='let msg of myOwnMessages'>
         <li class="sent" *ngIf="msg.user===userChat.user">
