@@ -11,9 +11,9 @@
         <li class="contact" (click)="getContactPosition(i)">
           <div class="wrap">
             <span class="contact-status online"></span>
-            <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+            <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
             <div class="meta">
-              <p class="name">{{contact.name}}</p>
+              <p class="name">{{contact.name}}<span *ngIf="typingChat!==''"><em>is typing...</em></span></p>
               <em style="margin-left: 50px" *ngIf="myContacts[i]!==null">{{myLastMessages[i]}}</em>
             </div>
           </div>
@@ -23,7 +23,7 @@
   </div>
   <div class="content">
     <div class="contact-profile">
-      <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+      <img *ngIf="userChat.contact!==''" src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
       <p>{{(userChat.contact)}}</p>
     </div>
     <li class="messages">

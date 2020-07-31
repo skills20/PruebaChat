@@ -31,9 +31,8 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.activated.snapshot.params.id;
-    const contacts = this.activated.snapshot.params.myContacts;
     this.userChat.user = id;
-    this.myContacts = contacts;
+    this.webService.emit(this.updateMessages, this.userChat);
 
     // Cuando recibo un mensaje
     this.webService.listen('text-event').subscribe((data: []) => {
@@ -58,7 +57,7 @@ export class ChatComponent implements OnInit {
       });
     })
 
-    //de seleccionar Contacto
+    //al seleccionar Contacto
     this.webService.listen('update-Messages').subscribe((data: []) => {
       this.myMessages = data;
       this.typingChat = '';
@@ -94,7 +93,6 @@ export class ChatComponent implements OnInit {
 
     //Cuando alguien está escribiendo
     this.webService.listen('chat-typing').subscribe((data) => {
-      this.typingChat = '';
       this.typingChat += data;
     })
   }
